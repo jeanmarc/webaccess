@@ -1,5 +1,5 @@
 # A base class for all HTTP routers
-extends Reference
+extends RefCounted
 class_name HttpRouter
 
 
@@ -26,7 +26,7 @@ func handle_patch(request: HttpRequest, response: HttpResponse) -> void:
 # Handle a DELETE request
 func handle_delete(request: HttpRequest, response: HttpResponse) -> void:
 	response.send(405, "DELETE not allowed")
-	
+
 # Handle an OPTIONS request
 func handle_options(request: HttpRequest, response: HttpResponse) -> void:
 	response.send(405, "OPTIONS not allowed")
