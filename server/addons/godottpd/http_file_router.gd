@@ -5,7 +5,10 @@ class_name HttpFileRouter
 # Full path to the folder which will be exposed to web
 var path: String = ""
 
-# Full path to the fallback page which will be served if the requested file was not found
+# Relative path to the index page, which will be served when a request is made to "/" (server root)
+var index_page: String = "index.html"
+
+# Relative path to the fallback page which will be served if the requested file was not found
 var fallback_page: String = ""
 
 # An ordered list of extensions that will be checked
@@ -26,12 +29,14 @@ var exclude_extensions: PackedStringArray = []
 func _init(
 	path: String,
 	options: Dictionary = {
+		index_page = index_page,
 		fallback_page = fallback_page,
 		extensions = extensions,
-		exclude_extensions = exclude_extensions
+		exclude_extensions = exclude_extensions,
 	}
 	) -> void:
 	self.path = path
+	self.index_page = options.get("index_page", "")
 	self.fallback_page = options.get("fallback_page", "")
 	self.extensions = options.get("extensions", [])
 	self.exclude_extensions = options.get("exclude_extensions", [])
@@ -40,6 +45,11 @@ func _init(
 func handle_get(request: HttpRequest, response: HttpResponse) -> void:
 	var serving_path: String = path + request.path
 	var file_exists: bool = _file_exists(serving_path)
+
+	if request.path == "/" and not file_exists:
+		if index_page.length() > 0:
+			serving_path = path + "/" + index_page
+			file_exists = _file_exists(serving_path)
 
 	if request.path.get_extension() == "" and not file_exists:
 		for extension in extensions:
@@ -56,8 +66,9 @@ func handle_get(request: HttpRequest, response: HttpResponse) -> void:
 			_get_mime(serving_path.get_extension())
 			)
 	else:
-		if fallback_page != "":
-			response.send_raw(404, _serve_file(fallback_page), _get_mime(fallback_page.get_extension()))
+		if fallback_page.length() > 0:
+			serving_path = path + "/" + fallback_page
+			response.send_raw(200 if index_page == fallback_page else 404, _serve_file(serving_path), _get_mime(fallback_page.get_extension()))
 		else:
 			response.send_raw(404)
 
@@ -67,11 +78,13 @@ func handle_get(request: HttpRequest, response: HttpResponse) -> void:
 # - file_path: Full path to the file
 func _serve_file(file_path: String) -> PackedByteArray:
 	var content: PackedByteArray = []
-	var file = FileAccess.open(file_path, FileAccess.READ)
-	if !file:
-		content = ("Couldn't serve file [%s], it does not exist or we have no access" % file_path).to_ascii_buffer()
+	var file: FileAccess = FileAccess.open(file_path, FileAccess.READ)
+	var error = file.get_open_error()
+	if error:
+		content = ("Couldn't serve file, ERROR = %s" % error).to_ascii_buffer()
 	else:
-		content = file.get_buffer(file.get_len())
+		content = file.get_buffer(file.get_length())
+	file.close()
 	return content
 
 # Check if a file exists
@@ -79,11 +92,7 @@ func _serve_file(file_path: String) -> PackedByteArray:
 # #### Parameters
 # - file_path: Full path to the file
 func _file_exists(file_path: String) -> bool:
-	var file = FileAccess.open(file_path, FileAccess.READ)
-	if !file:
-		return false
-	else:
-		return true
+	return FileAccess.file_exists(file_path)
 
 # Get the full MIME type of a file from its extension
 #

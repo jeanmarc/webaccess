@@ -33,14 +33,24 @@ var _header_regex: RegEx = RegEx.new()
 # The base path used in a project to serve files
 var _local_base_path: String = "res://src"
 
+# list of host allowed to call the server
+var _allowed_origins: PackedStringArray = []
+
+# Comma separed methods for the access control
+var _access_control_allowed_methods = "POST, GET, OPTIONS"
+
+# Comma separed headers for the access control
+var _access_control_allowed_headers = "content-type"
+
 # Compile the required regex
-func _init(_logging: bool = false) -> void:
+func _init(_logging: bool = false):
 	self._logging = _logging
+	set_process(false)
 	_method_regex.compile("^(?<method>GET|POST|HEAD|PUT|PATCH|DELETE|OPTIONS) (?<path>[^ ]+) HTTP/1.1$")
-	_header_regex.compile("^(?<key>[^:]+): (?<value>.+)$")
+	_header_regex.compile("^(?<key>[\\w-]+): (?<value>(.*))$")
 
 # Print a debug message in console, if the debug mode is enabled
-#
+# 
 # #### Parameters
 # - message: The message to be printed (only in debug mode)
 func _print_debug(message: String) -> void:
@@ -86,9 +96,15 @@ func _process(_delta: float) -> void:
 
 # Start the server
 func start():
+	set_process(true)
 	self._server = TCPServer.new()
-	self._server.listen(self.port, self.bind_address)
-	_print_debug("Server listening on http://%s:%s" % [self.bind_address, self.port])
+	var err: int = self._server.listen(self.port, self.bind_address)
+	match err:
+		22:
+			_print_debug("Could not bind to port %d, already in use" % [self.port])
+			stop()
+		_:
+			_print_debug("HTTP Server listening on http://%s:%s" % [self.bind_address, self.port])
 
 
 # Stop the server and disconnect all clients
@@ -97,8 +113,9 @@ func stop():
 		client.disconnect_from_host()
 	self._clients.clear()
 	self._server.stop()
+	set_process(false)
 	_print_debug("Server stopped.")
-
+	
 
 # Interpret a request string and perform the request
 #
@@ -143,9 +160,30 @@ func _handle_request(client: StreamPeer, request_string: String):
 func _perform_current_request(client: StreamPeer, request: HttpRequest):
 	_print_debug("HTTP Request: " + str(request))
 	var found = false
+	var is_allowed_origin = false
 	var response = HttpResponse.new()
+	var fetch_mode = ""
+	var origin = ""
 	response.client = client
 	response.server_identifier = server_identifier
+
+	if request.headers.has("Sec-Fetch-Mode"):
+		fetch_mode = request.headers["Sec-Fetch-Mode"]
+	elif request.headers.has("sec-fetch-mode"):
+		fetch_mode = request.headers["sec-fetch-mode"]
+
+	if request.headers.has("Origin"):
+		origin = request.headers["Origin"]
+	elif request.headers.has("origin"):
+		origin = request.headers["origin"]
+
+	if _allowed_origins.has(origin):
+		is_allowed_origin = true
+		response.access_control_origin = origin
+
+	response.access_control_allowed_methods = _access_control_allowed_methods
+	response.access_control_allowed_headers = _access_control_allowed_headers
+
 	for router in self._routers:
 		var matches = router.path.search(request.path)
 		if matches:
@@ -175,9 +213,18 @@ func _perform_current_request(client: StreamPeer, request: HttpRequest):
 					found = true
 					router.router.handle_delete(request, response)
 				"OPTIONS":
+					if _allowed_origins.size() > 0 && fetch_mode == "cors":
+						if is_allowed_origin:
+							response.send(204)
+						else:
+							response.send(400, "%s is not present in the allowed origins" % origin)
+
+						return
+
 					found = true
 					router.router.handle_options(request, response)
-	if not found:
+			break
+	if not found:	
 		response.send(404, "Not found")
 
 
@@ -186,9 +233,9 @@ func _perform_current_request(client: StreamPeer, request: HttpRequest):
 #
 # #### Parameters
 # - path: The path of the HttpRequest
-# - should_match_subfolder: (dafult [false]) if subfolders should be matched and grouped,
+# - should_match_subfolder: (dafult [false]) if subfolders should be matched and grouped, 
 #							used for HttpFileRouter
-#
+# 
 # Returns: A 2D array, containing a @regexp String and Dictionary of @params
 # 			[0] = @regexp --> the output expression as a String, to be compiled in RegExp
 # 			[1] = @params --> an Array of parameters, indexed by names
@@ -205,11 +252,17 @@ func _path_to_regexp(path: String, should_match_subfolders: bool = false) -> Arr
 			params.append(fragment)
 		else:
 			regexp += "/" + fragment
-	regexp += "[/#?]?$" if not should_match_subfolders else "(?<subpath>$|/.*)"
+	regexp += "[/#?]?$" if not should_match_subfolders else "(?<subpath>$|/.*)" 
 	return [regexp, params]
 
 
-# Extracts query parameters from a String query,
+func enable_cors(allowed_origins: PackedStringArray, access_control_allowed_methods : String = "POST, GET, OPTIONS", access_control_allowed_headers : String = "content-type"):
+	_allowed_origins = allowed_origins
+	_access_control_allowed_methods = access_control_allowed_methods
+	_access_control_allowed_headers = access_control_allowed_headers
+
+
+# Extracts query parameters from a String query, 
 # building a Query Dictionary of param:value pairs
 #
 # #### Parameters
@@ -227,9 +280,9 @@ func _extract_query_params(query_string: String) -> Dictionary:
 		var kv : Array = param.split("=")
 		var value: String = kv[1]
 		if value.is_valid_int():
-			query[kv[0]] = int(value)
+			query[kv[0]] = value.to_int()
 		elif value.is_valid_float():
-			query[kv[0]] = float(value)
+			query[kv[0]] = value.to_float()
 		else:
 			query[kv[0]] = value
 	return query

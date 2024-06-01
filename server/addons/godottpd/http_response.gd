@@ -18,6 +18,15 @@ var headers: Dictionary = {}
 # Cookies will be automatically sent via "Set-Cookie" headers to clients
 var cookies: Array = []
 
+# Origins allowed to call this resource
+var access_control_origin = "*"
+
+# Comma separed methods for the access control
+var access_control_allowed_methods = "POST, GET, OPTIONS"
+
+# Comma separed headers for the access control
+var access_control_allowed_headers = "content-type"
+
 # Send out a raw (Bytes) response to the client
 # Useful to send files faster or raw data which will be converted by the client
 #
@@ -25,16 +34,19 @@ var cookies: Array = []
 # - status: The HTTP status code to send
 # - data: The body data to send []
 # - content_type: The type of the content to send ["text/html"]
-func send_raw(status_code: int, data: PackedByteArray = [], content_type: String = "application/octet-stream") -> void:
-	client.put_data(("HTTP/1.1 %d %s\n" % [status_code, _match_status_code(status_code)]).to_ascii_buffer())
-	client.put_data(("Server: %s\n" % server_identifier).to_ascii_buffer())
+func send_raw(status_code: int, data: PackedByteArray = PackedByteArray([]), content_type: String = "application/octet-stream") -> void:
+	client.put_data(("HTTP/1.1 %d %s\r\n" % [status_code, _match_status_code(status_code)]).to_ascii_buffer())
+	client.put_data(("Server: %s\r\n" % server_identifier).to_ascii_buffer())
 	for header in headers.keys():
-		client.put_data(("%s: %s\n" % [header, headers[header]]).to_ascii_buffer())
+		client.put_data(("%s: %s\r\n" % [header, headers[header]]).to_ascii_buffer())
 	for cookie in cookies:
-		client.put_data(("Set-Cookie: %s\n" % cookie).to_ascii())
-	client.put_data(("Content-Length: %d\n" % data.size()).to_ascii_buffer())
-	client.put_data("Connection: close\n".to_ascii_buffer())
-	client.put_data(("Content-Type: %s\n\n" % content_type).to_ascii_buffer())
+		client.put_data(("Set-Cookie: %s\r\n" % cookie).to_ascii_buffer())
+	client.put_data(("Content-Length: %d\r\n" % data.size()).to_ascii_buffer())
+	client.put_data("Connection: close\r\n".to_ascii_buffer())
+	client.put_data(("Access-Control-Allow-Origin: %s\r\n" % access_control_origin).to_ascii_buffer())
+	client.put_data(("Access-Control-Allow-Methods: %s\r\n" % access_control_allowed_methods).to_ascii_buffer())
+	client.put_data(("Access-Control-Allow-Headers: %s\r\n" % access_control_allowed_headers).to_ascii_buffer())
+	client.put_data(("Content-Type: %s\r\n\r\n" % content_type).to_ascii_buffer())
 	client.put_data(data)
 
 # Send out a response to the client
@@ -80,7 +92,6 @@ func cookie(name: String, value: String, options: Dictionary = {}) -> void:
 	if options.has("path"): cookie+="; Path="+options["path"]
 	if options.has("secure"): cookie+="; Secure="+options["secure"]
 	if options.has("httpOnly"): cookie+="; HttpOnly="+options["httpOnly"]
-	if options.has("path"): cookie+="; Path="+options["path"]
 	if options.has("sameSite"):
 		match (options["sameSite"]):
 			true: cookie += "; SameSite=Strict"
