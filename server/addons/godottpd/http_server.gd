@@ -50,7 +50,7 @@ func _init(_logging: bool = false):
 	_header_regex.compile("^(?<key>[\\w-]+): (?<value>(.*))$")
 
 # Print a debug message in console, if the debug mode is enabled
-# 
+#
 # #### Parameters
 # - message: The message to be printed (only in debug mode)
 func _print_debug(message: String) -> void:
@@ -115,7 +115,7 @@ func stop():
 	self._server.stop()
 	set_process(false)
 	_print_debug("Server stopped.")
-	
+
 
 # Interpret a request string and perform the request
 #
@@ -224,7 +224,7 @@ func _perform_current_request(client: StreamPeer, request: HttpRequest):
 					found = true
 					router.router.handle_options(request, response)
 			break
-	if not found:	
+	if not found:
 		response.send(404, "Not found")
 
 
@@ -233,9 +233,9 @@ func _perform_current_request(client: StreamPeer, request: HttpRequest):
 #
 # #### Parameters
 # - path: The path of the HttpRequest
-# - should_match_subfolder: (dafult [false]) if subfolders should be matched and grouped, 
+# - should_match_subfolder: (dafult [false]) if subfolders should be matched and grouped,
 #							used for HttpFileRouter
-# 
+#
 # Returns: A 2D array, containing a @regexp String and Dictionary of @params
 # 			[0] = @regexp --> the output expression as a String, to be compiled in RegExp
 # 			[1] = @params --> an Array of parameters, indexed by names
@@ -252,7 +252,7 @@ func _path_to_regexp(path: String, should_match_subfolders: bool = false) -> Arr
 			params.append(fragment)
 		else:
 			regexp += "/" + fragment
-	regexp += "[/#?]?$" if not should_match_subfolders else "(?<subpath>$|/.*)" 
+	regexp += "[/#?]?$" if not should_match_subfolders else "(?<subpath>$|/.*)"
 	return [regexp, params]
 
 
@@ -262,7 +262,7 @@ func enable_cors(allowed_origins: PackedStringArray, access_control_allowed_meth
 	_access_control_allowed_headers = access_control_allowed_headers
 
 
-# Extracts query parameters from a String query, 
+# Extracts query parameters from a String query,
 # building a Query Dictionary of param:value pairs
 #
 # #### Parameters

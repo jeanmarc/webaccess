@@ -46,6 +46,8 @@ func send_raw(status_code: int, data: PackedByteArray = PackedByteArray([]), con
 	client.put_data(("Access-Control-Allow-Origin: %s\r\n" % access_control_origin).to_ascii_buffer())
 	client.put_data(("Access-Control-Allow-Methods: %s\r\n" % access_control_allowed_methods).to_ascii_buffer())
 	client.put_data(("Access-Control-Allow-Headers: %s\r\n" % access_control_allowed_headers).to_ascii_buffer())
+	client.put_data("Cross-Origin-Opener-Policy: same-origin\r\n".to_ascii_buffer())
+	client.put_data("Cross-Origin-Embedder-Policy: require-corp\r\n".to_ascii_buffer())
 	client.put_data(("Content-Type: %s\r\n\r\n" % content_type).to_ascii_buffer())
 	client.put_data(data)
 
