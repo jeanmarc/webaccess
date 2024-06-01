@@ -52,6 +52,8 @@ where it is hosted (this is the Same Origin, so API calls are allowed in the bro
 
 This work is licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), except for the
 following resources:
-* none
+* server/addons/godottpd - based on https://github.com/deep-entertainment/godottpd/releases/tag/0.2.1
+  * MIT - see server/addons/godottpd/LICENSE
+  * Fixes made by me to run in Godot 4.2
 
 (C) CC BY-SA 4.0, 2024 Jean-Marc van Leerdam <j.m.van.leerdam@gmail.com>
