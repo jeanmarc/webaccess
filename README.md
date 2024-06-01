@@ -51,6 +51,12 @@ server is not running in a browser, it is not restricted by CORS policies. The w
 where it is hosted (this is the Same Origin, so API calls are allowed in the browser), and that server will call the 
 "external" API, passing the result back to the webapp in the browser.
 
+### Another snag: Secure Context needed (ergo: https)
+The HTTP Server(s) need to use HTTPS in order for the browser (where the webapp runs) to allow it to run the Godot
+application. The initial solution uses godottpd, which has no support for HTTPS.
+
+A Reddit post and one of its comments points to a possible solution (https://www.reddit.com/r/godot/comments/17ltxjp/comment/l1uz70s)
+
 
 ## License
 
