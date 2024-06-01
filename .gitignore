@@ -1,0 +1,10 @@
+.idea/
+
+# Godot 4+ specific ignores
+.godot/
+
+imports/
+exports/
+Exports/
+
+*.blend
