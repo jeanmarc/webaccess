@@ -6,10 +6,11 @@ Based on the instructions from the Godot manual (https://docs.godotengine.org/en
 with modifications where necessary.
 
 ## Structure
-There's two Godot projects: one Webapp (the "client") and one server. The server is used as an example "external"
-server that provides an API. The Webapp is hosted elsewhere, and is configured in such a way that it can run in any
-browser, and still be able to call the "external" API (typically this is prevented because of CORS policies in the
-browser, so we need to make sure our "external" server allows our webapp to call it).
+There's three Godot projects: one Webapp (the "client"), a webapp server, and an "external" server. The "external"
+server is an example server that provides an API. The Webapp is hosted via the webapp server, and is configured in such
+a way that it can run in any browser, and still be able to call the "external" API (typically this is prevented because
+of CORS policies in the browser, so we need to find a solution that allows requests from our webapp to reach the 
+"external" API).
 
 ## CORS restrictions
 To be able to call an API that is hosted on another server as the webapp host, the browser needs to receive instructions
@@ -42,11 +43,14 @@ After exporting the project to HTML5 and running it with the `serve.py` provided
   * ![Call blocked](resources/host_cors_error.jpg)
 
 ### Solving the CORS problem
+Typically, we want to call APIs that are not directly in our control, so we will not be able to get the API equipped
+with the correct CORS headers.
 
 To work around the CORS restrictions, we leverage the server that hosts our webapp as an intermediary. Since that 
 server is not running in a browser, it is not restricted by CORS policies. The webapp (in the browser) calls the server
-where it is hosted (this is the Same Origin, so API calls are allowed in the browser), and the server will call the 
+where it is hosted (this is the Same Origin, so API calls are allowed in the browser), and that server will call the 
 "external" API, passing the result back to the webapp in the browser.
+
 
 ## License
 
