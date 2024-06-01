@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://lrdxlmevl6hd"]
+
+[ext_resource type="Script" path="res://scripts/remote_api.gd" id="1_p6dms"]
+
+[node name="RemoteApi" type="Node"]
+script = ExtResource("1_p6dms")
