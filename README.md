@@ -70,6 +70,7 @@ This work is licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/b
 following resources:
 * `server/borrows/anotherHTTPserver.gd`
   * Copyright (c) Anutrix(Numan Zaheer Ahmed) - MIT License
+  * Adjusted by me to support replying with binaries (skip the reading as String and converting to PackedByteArray)
 * `remote_api/addons/godottpd` and `server/addons/godottpd`  
   * based on https://github.com/deep-entertainment/godottpd
   * MIT - see server/addons/godottpd/LICENSE

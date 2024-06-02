@@ -3,9 +3,10 @@
 # Godot 4+ specific ignores
 .godot/
 
-imports/
+Data/
 exports/
 Exports/
+imports/
 
 *.blend
 *.iml

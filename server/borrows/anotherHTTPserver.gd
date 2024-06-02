@@ -242,7 +242,7 @@ func _send_response() -> void:
 
 	if !mimes.has(req_ext) || !FileAccess.file_exists(filepath):
 		peer_put_bytes(get_headers(404))
-		send_response_payload("Not Found")
+		send_response_payload("Not Found".to_utf8_buffer())
 		return
 
 	var ctype: String = mimes[req_ext]
@@ -253,7 +253,7 @@ func _send_response() -> void:
 		response_data_buffer_array.append("\r\n\r\n")
 		return
 
-	var file_content: String = res_file.get_as_text()
+	var file_content: PackedByteArray = FileAccess.get_file_as_bytes(filepath)
 	if file_content.is_empty():
 		print("Empty file")
 		peer_put_bytes(get_headers(204, ctype))
@@ -263,17 +263,17 @@ func _send_response() -> void:
 
 	send_response_payload(file_content)
 
-func send_response_payload(data: String) -> void:
+func send_response_payload(data: PackedByteArray) -> void:
 	var response_payload: Array[PackedByteArray] = []
 
-	var clen: int = data.length()
+	var clen: int = data.size()
 	if clen > 0:
 		if clen < MAX_CHUNK_SIZE:
 			response_payload.append(str_to_bytes("Content-Length:" + str(clen) + "\r\n\r\n"))
-			response_payload.append(str_to_bytes(data))
+			response_payload.append(data)
 		else:
 			response_payload.append(str_to_bytes("Transfer-Encoding: chunked\r\n\r\n"))
-			response_payload.append_array(str_to_chunks(data))
+			response_payload.append_array(data_to_chunks(data))
 			response_payload.append(str_to_bytes("0\r\n\r\n"))
 
 	peer_put_bytes(response_payload)
@@ -427,6 +427,26 @@ func get_headers(status_code: int, content_type: String = "text/html") -> Array[
 
 func str_to_bytes(data_str: String) -> PackedByteArray:
 	return data_str.to_utf8_buffer()
+
+func data_to_chunks(data: PackedByteArray) -> Array[PackedByteArray]:
+	var data_bytes_size: int = data.size()
+	var chunks: Array[PackedByteArray] = []
+	var curr_pos: int = 0
+
+	while(curr_pos < data_bytes_size):
+		var remaining: int = data_bytes_size - curr_pos
+		if remaining > MAX_CHUNK_SIZE:
+			remaining = MAX_CHUNK_SIZE
+		var chunk: PackedByteArray = ("%X" % remaining).to_utf8_buffer()
+		chunk.append_array("\r\n".to_utf8_buffer())
+		chunk.append_array(data.slice(curr_pos, curr_pos + remaining))
+		chunk.append_array("\r\n".to_utf8_buffer())
+
+		chunks.append(chunk)
+
+		curr_pos += MAX_CHUNK_SIZE
+
+	return chunks
 
 func str_to_chunks(data_str: String) -> Array[PackedByteArray]:
 	var data_bytes: PackedByteArray = data_str.to_utf8_buffer()
