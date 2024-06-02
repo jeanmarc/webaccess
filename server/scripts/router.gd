@@ -1,4 +1,4 @@
-extends HttpRouter
+extends Node
 class_name FibonacciRouter
 
 var f0 = 1

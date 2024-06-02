@@ -10,30 +10,21 @@ var use_tls = true
 func _ready():
 	generate_crypto()
 
-	var other_server = AnotherHTTPServer.new()
-	other_server.headers["Cross-Origin-Opener-Policy"] = "same-origin"
-	other_server.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+	var server = AnotherHTTPServer.new()
+	server.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+	server.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
 
-	var error = other_server.listen(bind_port, bind_ip, use_tls, SERVER_KEY, SERVER_CERT)
+	var error = server.listen(bind_port, bind_ip, use_tls, SERVER_KEY, SERVER_CERT)
 	match error:
 		OK:
 			print("other http server started")
 			print("Listening on https://%s:%s" % [bind_ip, bind_port])
 		ERR_ALREADY_IN_USE:
 			print("Port in use (%s)" % [bind_port])
-			other_server.stop()
+			server.stop()
 		_:
 			print("Error starting other server. Errorcode: %d" % error)
-			other_server.stop()
-
-	var webappServer = HttpFileRouter.new("../exports")
-
-	var server = HttpServer.new()
-	server.register_router("/fib", FibonacciRouter.new())
-	server.register_router("/app", webappServer)
-	server.enable_cors(["*"])
-	add_child(server)
-	server.start()
+			server.stop()
 
 func generate_crypto(overwrite: bool = false):
 	if !(ResourceLoader.exists(SERVER_KEY) && ResourceLoader.exists(SERVER_CERT)) || overwrite:
