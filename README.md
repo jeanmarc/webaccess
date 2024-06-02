@@ -68,6 +68,8 @@ Inspiration from https://www.youtube.com/watch?v=2eGkj9eBxAo  (and https://www.y
 
 This work is licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), except for the
 following resources:
+* `server/borrows/anotherHTTPserver.gd`
+  * Copyright (c) Anutrix(Numan Zaheer Ahmed) - MIT License
 * `remote_api/addons/godottpd` and `server/addons/godottpd`  
   * based on https://github.com/deep-entertainment/godottpd
   * MIT - see server/addons/godottpd/LICENSE

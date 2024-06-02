@@ -22,3 +22,5 @@ func generate_crypto(overwrite: bool = false):
 		var cert = crypto.generate_self_signed_certificate(key, "CN=demoServer,O=demoOrg,C=NL", "20240101000000", "20341231235959")
 		key.save("res://server.key")
 		cert.save("res://server.crt")
+	else:
+		print("Crypto material already present")
