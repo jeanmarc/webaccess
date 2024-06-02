@@ -28,10 +28,13 @@ func _process(delta):
 			if data.type == Messages.Type.peerId:
 				id = data.id
 				print("Received id %s" % id)
+			if data.type == Messages.Type.responseData:
+				print("Answer is %s" % data.response)
 
 func _on_request_button_pressed():
 	var request = {
 		"type": Messages.Type.requestUrl,
+		"peer": id,
 		"url": "https://api.github.com/repos/godotengine/godot/releases/latest"
 	}
 	print("Sending: %s" % JSON.stringify(request))

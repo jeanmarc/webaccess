@@ -3,5 +3,6 @@ class_name Messages
 
 enum Type{
 	peerId,
-	requestUrl
+	requestUrl,
+	responseData
 }

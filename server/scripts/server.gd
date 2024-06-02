@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 const SERVER_KEY = "res://server.key"
 const SERVER_CERT = "res://server.crt"
@@ -50,7 +50,7 @@ func _process(_delta):
 			print(data)
 
 			if data.type == Messages.Type.requestUrl:
-				print("Should call %s" % data.url)
+				perform_request(data.peer, data.url)
 
 
 func generate_crypto(overwrite: bool = false):
@@ -76,3 +76,7 @@ func peer_connected(id):
 func peer_disconnected(id):
 	users.erase(id)
 
+func perform_request(peer_id, request):
+	print("Will call %s for %s" % [request, peer_id])
+	var new_request = Request.new()
+	new_request.perform_request(self, peer, peer_id, request)
