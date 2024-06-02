@@ -9,3 +9,9 @@ Exports/
 
 *.blend
 *.iml
+
+# ignore crypto material
+*.crt
+*.key
+*.pem
+*.p12

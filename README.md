@@ -57,6 +57,8 @@ application. The initial solution uses godottpd, which has no support for HTTPS.
 
 A Reddit post and one of its comments points to a possible solution (https://www.reddit.com/r/godot/comments/17ltxjp/comment/l1uz70s)
 
+The webapp and its backend can use the websocket API and/or WebRTC (so no need to hack our own http server with TLS support).
+Inspiration from https://www.youtube.com/watch?v=2eGkj9eBxAo  (and https://www.youtube.com/watch?v=ulfGNtiItnc)
 
 ## License
 
