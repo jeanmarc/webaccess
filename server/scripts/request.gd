@@ -18,10 +18,10 @@ func perform_request(parent, websocket, peer_id, request):
 
 func _on_request_completed(result, response_code, headers, body):
 	print("Request completed with result %s, response_code %s" % [resultString(result), response_code])
-	var json = JSON.parse_string(body.get_string_from_utf8())
+	var data = body.get_string_from_utf8()
 	var reply = {
 		"type": Messages.Type.responseData,
-		"response": json
+		"response": data
 	}
 	peer.get_peer(requested_for_peer).put_packet(JSON.stringify(reply).to_utf8_buffer())
 	print("Pushed reply, bye")
