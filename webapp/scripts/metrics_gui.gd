@@ -45,9 +45,14 @@ func _process(delta):
 				replyText.clear()
 				replyText.insert_text_at_caret(str(data.response))
 				if data.response.contains("random"):
-					var random_value = data.response.split("\n").filter(func(x): x.contains("random"))
-					print("found value " + random_value)
-					replyText.insert_text_at_caret("\n\n" + random_value)
+					replyText.insert_text_at_caret("\nextracting value...\n")
+					var all_values = Array(str(data.response).split("\n"))
+					replyText.insert_text_at_caret(str(all_values))
+					var random_value = all_values.filter(func(s):print("testing " + s );return s.contains("random"))
+					print("found value " + str(random_value))
+					var rnd = random_value[0].split(" ")[1].to_float()
+					metric_value = rnd
+
 
 func _on_direct_request_button_pressed():
 	$HTTPRequest.request(requestUrlLine.text)

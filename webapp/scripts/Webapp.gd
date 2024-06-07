@@ -7,11 +7,7 @@ var server_host = "localhost"
 var server_port = 9998
 var peer = WebSocketMultiplayerPeer.new()
 var uiInstance: MetricsGui
-var id = 0:
-	set(new_id):
-		id = new_id
-		uiInstance.id = new_id
-		
+var id = 0
 
 func _ready():
 	var serverCert = load("res://server.crt")
