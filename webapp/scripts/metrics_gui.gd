@@ -1,18 +1,24 @@
 extends Control
+class_name MetricsGui
+
+var id: int = 0
 
 @onready var requestUrlLine = $RequestURL
 @onready var replyText: TextEdit = $Reply
 
+@onready var progressBar = $TextureProgressBar
+
 var server_host = "localhost"
 var server_port = 9998
-var peer = WebSocketMultiplayerPeer.new()
-var uiInstance: MetricsGui
-var id = 0:
-	set(new_id):
-		id = new_id
-		uiInstance.id = new_id
-		
 
+var metric_value: float:
+	set(new_value):
+		metric_value = new_value
+		progressBar.value = new_value
+		
+var peer = WebSocketMultiplayerPeer.new()
+	
+# Called when the node enters the scene tree for the first time.
 func _ready():
 	var serverCert = load("res://server.crt")
 	peer.create_client("wss://%s:%s" % [server_host, server_port], TLSOptions.client_unsafe(serverCert))
@@ -20,11 +26,6 @@ func _ready():
 
 	$SendRequest.pressed.connect(_on_request_button_pressed)
 	$SendRequestDirect.pressed.connect(_on_direct_request_button_pressed)
-	
-	var ui = preload("res://scenes/metrics_gui.tscn")
-	
-	uiInstance = ui.instantiate()
-	self.add_child(uiInstance)
 
 func _process(delta):
 	peer.poll()
@@ -43,6 +44,10 @@ func _process(delta):
 				print("Answer is %s" % data.response)
 				replyText.clear()
 				replyText.insert_text_at_caret(str(data.response))
+				if data.response.contains("random"):
+					var random_value = data.response.split("\n").filter(func(x): x.contains("random"))
+					print("found value " + random_value)
+					replyText.insert_text_at_caret("\n\n" + random_value)
 
 func _on_direct_request_button_pressed():
 	$HTTPRequest.request(requestUrlLine.text)
@@ -61,5 +66,3 @@ func _on_request_completed(result, response_code, headers, body):
 	print(reply)
 	replyText.clear()
 	replyText.insert_text_at_caret(reply)
-
-
