@@ -11,6 +11,7 @@ script = ExtResource("1_wcjci")
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [node name="SendRequest" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 13.0
 offset_top = 337.0
@@ -19,6 +20,7 @@ offset_bottom = 368.0
 text = "Server Request"
 
 [node name="SendRequestDirect" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 152.0
 offset_top = 337.0
@@ -27,6 +29,7 @@ offset_bottom = 368.0
 text = "Direct Request"
 
 [node name="RequestURL" type="LineEdit" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 15.0
 offset_top = 379.0
@@ -35,6 +38,7 @@ offset_bottom = 410.0
 text = "http://localhost:9090/fib"
 
 [node name="Reply" type="TextEdit" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 17.0
 offset_top = 421.0
