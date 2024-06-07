@@ -16,6 +16,7 @@ func _ready():
 
 	$SendRequest.pressed.connect(_on_request_button_pressed)
 	$SendRequestDirect.pressed.connect(_on_direct_request_button_pressed)
+	$Switch3D.pressed.connect(switch_scene)
 	
 	var ui = preload("res://scenes/metrics_gui.tscn")
 	
@@ -57,5 +58,8 @@ func _on_request_completed(result, response_code, headers, body):
 	print(reply)
 	replyText.clear()
 	replyText.insert_text_at_caret(reply)
+
+func switch_scene():
+	get_tree().change_scene_to_file("res://scenes/metrics_world.tscn")
 
 

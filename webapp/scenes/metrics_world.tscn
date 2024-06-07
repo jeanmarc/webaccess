@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://bh340qivrvmi2"]
+
+[ext_resource type="Script" path="res://scripts/metrics_world.gd" id="1_p3hg8"]
+[ext_resource type="PackedScene" uid="uid://d3hfj3lp05hf5" path="res://scenes/gui_panel.tscn" id="2_u7i7p"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_einww"]
+size = Vector3(20, 0.1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r827r"]
+albedo_color = Color(0.332881, 0.332881, 0.332881, 1)
+
+[node name="MetricsWorld" type="Node3D"]
+script = ExtResource("1_p3hg8")
+
+[node name="GuiPanel" parent="." instance=ExtResource("2_u7i7p")]
+
+[node name="GuiPanel2" parent="." instance=ExtResource("2_u7i7p")]
+transform = Transform3D(0.898219, -0.180014, -0.400997, 0.137074, 0.981513, -0.133576, 0.417629, 0.0650145, 0.906289, 1.79821, 0.473229, 0.0129118)
+
+[node name="GuiPanel3" parent="." instance=ExtResource("2_u7i7p")]
+transform = Transform3D(0.819227, -0.0365237, 0.572305, -0.0450729, 0.990782, 0.12775, -0.571696, -0.130452, 0.810029, -1.67497, 0.473229, 0.0129118)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.999299, -0.0211056, 0.0309228, 0.0160573, 0.987744, 0.155252, -0.0338205, -0.154647, 0.987391, 0.105054, 0.105936, 1.83217)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1149, -1.05922, -0.177599)
+mesh = SubResource("BoxMesh_einww")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.937677, -0.337657, 0.0821559, 0.169461, 0.237893, -0.956394, 0.303389, 0.910711, 0.280287, 0.127744, -0.891249, -3.80641)
+mesh = SubResource("BoxMesh_einww")
+surface_material_override/0 = SubResource("StandardMaterial3D_r827r")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.466062, 0.629381, -0.621825, 0, 0.702824, 0.711364, 0.884752, -0.33154, 0.32756, -1.61318, 1.05116, 1.85065)
+light_energy = 3.834

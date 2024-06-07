@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://d3hfj3lp05hf5"]
+
+[ext_resource type="Script" path="res://scripts/gui_panel.gd" id="1_4yuxe"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_0ik2g"]
+size = Vector2(1.6, 0.9)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ivbr3"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6c0v8"]
+resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
+albedo_texture = SubResource("ViewportTexture_ivbr3")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yuuxt"]
+size = Vector3(1.59372, 0.910187, 0.0820312)
+
+[node name="GuiPanel" type="Node3D"]
+script = ExtResource("1_4yuxe")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(1024, 1024)
+
+[node name="Quad" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_0ik2g")
+surface_material_override/0 = SubResource("StandardMaterial3D_6c0v8")
+
+[node name="Area3D" type="Area3D" parent="Quad"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Quad/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0155792, 0.00108337, 0.0302734)
+shape = SubResource("BoxShape3D_yuuxt")

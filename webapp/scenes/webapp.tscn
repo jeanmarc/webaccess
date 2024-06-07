@@ -19,6 +19,14 @@ offset_right = 138.0
 offset_bottom = 368.0
 text = "Server Request"
 
+[node name="Switch3D" type="Button" parent="."]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 602.0
+offset_right = 138.0
+offset_bottom = 633.0
+text = "Switch3D"
+
 [node name="SendRequestDirect" type="Button" parent="."]
 visible = false
 layout_mode = 0

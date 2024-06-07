@@ -26,6 +26,7 @@ func _ready():
 
 	$SendRequest.pressed.connect(_on_request_button_pressed)
 	$SendRequestDirect.pressed.connect(_on_direct_request_button_pressed)
+	$Timer.timeout.connect(_on_request_button_pressed)
 
 func _process(delta):
 	peer.poll()
