@@ -1,11 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://bh340qivrvmi2"]
+[gd_scene load_steps=7 format=3 uid="uid://bh340qivrvmi2"]
 
 [ext_resource type="Script" path="res://scripts/metrics_world.gd" id="1_p3hg8"]
 [ext_resource type="PackedScene" uid="uid://d3hfj3lp05hf5" path="res://scenes/gui_panel.tscn" id="2_u7i7p"]
-[ext_resource type="Script" path="res://borrows/FreeLookCamera.gd" id="3_q3ig8"]
+[ext_resource type="PackedScene" uid="uid://c1dr1d86ljhwx" path="res://scenes/player.tscn" id="3_j8wc5"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_einww"]
 size = Vector3(20, 0.1, 20)
+
+[sub_resource type="BoxMesh" id="BoxMesh_41gfw"]
+size = Vector3(20, 0.1, 2)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r827r"]
 albedo_color = Color(0.332881, 0.332881, 0.332881, 1)
@@ -14,26 +17,37 @@ albedo_color = Color(0.332881, 0.332881, 0.332881, 1)
 script = ExtResource("1_p3hg8")
 
 [node name="GuiPanel" parent="." instance=ExtResource("2_u7i7p")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.858421, 0)
 
 [node name="GuiPanel2" parent="." instance=ExtResource("2_u7i7p")]
-transform = Transform3D(-0.635875, -0.0162081, -0.771622, -0.0641756, 0.997427, 0.0319346, 0.76912, 0.0698253, -0.635279, 0.737401, 0.473229, 0.422912)
+transform = Transform3D(-0.635875, -0.0162081, -0.771622, -0.0641756, 0.997427, 0.0319346, 0.76912, 0.0698253, -0.635279, 0.737401, 1.33165, 0.422912)
 
 [node name="GuiPanel3" parent="." instance=ExtResource("2_u7i7p")]
-transform = Transform3D(0.704415, 0.122198, -0.699191, -0.0450729, 0.990782, 0.12775, 0.708356, -0.0584745, 0.703429, -0.908031, 0.473229, 0.346552)
+transform = Transform3D(0.704415, 0.122198, -0.699191, -0.0450729, 0.990782, 0.12775, 0.708356, -0.0584745, 0.703429, -0.908031, 1.33165, 0.346552)
 
 [node name="GuiPanel4" parent="." instance=ExtResource("2_u7i7p")]
-transform = Transform3D(-0.0420734, 0.0140831, -0.999015, -0.150974, 0.98833, 0.0202904, 0.987642, 0.15168, -0.0394568, -0.0321517, 0.563238, 0.0129118)
-
-[node name="FreeLookCamera" type="Camera3D" parent="."]
-transform = Transform3D(0.999299, -0.0211055, 0.0309228, 0.0160573, 0.987744, 0.155252, -0.0338205, -0.154647, 0.987391, 0.105054, 0.105936, 2.05636)
-script = ExtResource("3_q3ig8")
+transform = Transform3D(-0.0420734, 0.0140831, -0.999015, -0.150974, 0.98833, 0.0202904, 0.987642, 0.15168, -0.0394568, -0.0321517, 1.42166, 0.0129118)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0717369, -0.581687, -0.177599)
 mesh = SubResource("BoxMesh_einww")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.0430805, -0.995616, 0.083027, 0.00105632, -0.08315, -0.996536, 0.999071, -0.0428435, 0.00463402, 9.12774, 0.308839, 0.558443)
+mesh = SubResource("BoxMesh_41gfw")
+surface_material_override/0 = SubResource("StandardMaterial3D_r827r")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(-0.0430805, -0.995616, 0.083027, 0.00105632, -0.08315, -0.996536, 0.999071, -0.0428435, 0.00463402, -8.87226, 0.308839, 0.558443)
+mesh = SubResource("BoxMesh_41gfw")
+surface_material_override/0 = SubResource("StandardMaterial3D_r827r")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.999024, 0.0440932, -0.0026199, 0.00105632, -0.08315, -0.996536, -0.0441583, 0.995561, -0.0831149, -0.872256, 0.308839, 8.55844)
+mesh = SubResource("BoxMesh_41gfw")
+surface_material_override/0 = SubResource("StandardMaterial3D_r827r")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.999071, -0.0428434, 0.00463402, 0.00105632, -0.08315, -0.996536, 0.0430804, 0.995616, -0.083027, 0.127744, -0.891249, -3.44156)
 mesh = SubResource("BoxMesh_einww")
 surface_material_override/0 = SubResource("StandardMaterial3D_r827r")
@@ -41,3 +55,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_r827r")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.466062, 0.629381, -0.621825, 0, 0.702824, 0.711364, 0.884752, -0.33154, 0.327559, -2.6477, 3.07528, 1.85065)
 light_energy = 3.834
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("3_j8wc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0782883, 0.661889, 1.48273)
