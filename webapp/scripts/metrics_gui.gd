@@ -59,6 +59,9 @@ func _on_direct_request_button_pressed():
 	$HTTPRequest.request(requestUrlLine.text)
 
 func _on_request_button_pressed():
+	if id == 0:
+		print("Cannot send request, peer id not yet known")
+		return
 	var request = {
 		"type": Messages.Type.requestUrl,
 		"peer": id,
