@@ -23,8 +23,12 @@ func _on_request_completed(result, response_code, headers, body):
 		"type": Messages.Type.responseData,
 		"response": data
 	}
-	peer.get_peer(requested_for_peer).put_packet(JSON.stringify(reply).to_utf8_buffer())
-	print("Pushed reply, bye")
+	var caller = peer.get_peer(requested_for_peer)
+	if caller:
+		caller.put_packet(JSON.stringify(reply).to_utf8_buffer())
+		print("Pushed reply to %s, bye" % requested_for_peer)
+	else:
+		print("Cannot sent reply, caller %s is gone" % requested_for_peer)
 	queue_free()
 
 var resultDict= {
