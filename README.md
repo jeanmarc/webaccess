@@ -41,6 +41,9 @@ following resources:
 * `remote_api/addons/godottpd` and `server/addons/godottpd`
   * based on https://github.com/deep-entertainment/godottpd
   * MIT - see server/addons/godottpd/LICENSE
+* `webapp/borrows/FreeLookCamera.gd`
+  * MIT - Copyright 2020 Adam Viola
+  * https://github.com/adamviola/simple-free-look-camera/tree/master
 
 (C) CC BY-SA 4.0, 2024 Jean-Marc van Leerdam <j.m.van.leerdam@gmail.com>
 
