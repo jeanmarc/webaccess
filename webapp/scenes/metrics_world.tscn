@@ -30,14 +30,14 @@ transform = Transform3D(0.999299, -0.0211055, 0.0309228, 0.0160573, 0.987744, 0.
 script = ExtResource("3_q3ig8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1149, -1.05922, -0.177599)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0717369, -0.581687, -0.177599)
 mesh = SubResource("BoxMesh_einww")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.937677, -0.337657, 0.0821559, 0.169461, 0.237893, -0.956394, 0.303389, 0.910711, 0.280287, 0.127744, -0.891249, -3.80641)
+transform = Transform3D(0.999071, -0.0428434, 0.00463402, 0.00105632, -0.08315, -0.996536, 0.0430804, 0.995616, -0.083027, 0.127744, -0.891249, -3.44156)
 mesh = SubResource("BoxMesh_einww")
 surface_material_override/0 = SubResource("StandardMaterial3D_r827r")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.466062, 0.629381, -0.621825, 0, 0.702824, 0.711364, 0.884752, -0.33154, 0.32756, -1.61318, 1.05116, 1.85065)
+transform = Transform3D(0.466062, 0.629381, -0.621825, 0, 0.702824, 0.711364, 0.884752, -0.33154, 0.327559, -2.6477, 3.07528, 1.85065)
 light_energy = 3.834
