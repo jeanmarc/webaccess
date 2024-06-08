@@ -15,9 +15,9 @@ var metric_value: float:
 	set(new_value):
 		metric_value = new_value
 		progressBar.value = new_value
-		
+
 var peer = WebSocketMultiplayerPeer.new()
-	
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var serverCert = load("res://server.crt")

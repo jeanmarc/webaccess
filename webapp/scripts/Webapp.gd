@@ -17,9 +17,9 @@ func _ready():
 	$SendRequest.pressed.connect(_on_request_button_pressed)
 	$SendRequestDirect.pressed.connect(_on_direct_request_button_pressed)
 	$Switch3D.pressed.connect(switch_scene)
-	
+
 	var ui = preload("res://scenes/metrics_gui.tscn")
-	
+
 	uiInstance = ui.instantiate()
 	self.add_child(uiInstance)
 
