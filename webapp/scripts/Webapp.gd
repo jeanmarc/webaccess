@@ -2,6 +2,7 @@ extends Control
 
 @onready var requestUrlLine = $RequestURL
 @onready var replyText: TextEdit = $Reply
+@onready var panel_space: Control = $PanelSpace
 
 var server_host = "localhost"
 var server_port = 9998
@@ -22,7 +23,7 @@ func _ready():
 	var ui = preload("res://scenes/metrics_gui.tscn")
 
 	uiInstance = ui.instantiate()
-	self.add_child(uiInstance)
+	panel_space.add_child(uiInstance)
 
 
 func _process(_delta):

@@ -8,6 +8,11 @@ anchors_preset = 0
 mouse_filter = 1
 script = ExtResource("1_wcjci")
 
+[node name="PanelSpace" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [node name="SendRequest" type="Button" parent="."]
