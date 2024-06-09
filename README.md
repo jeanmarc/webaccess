@@ -30,6 +30,7 @@ of CORS policies in the browser, so we use a solution that allows requests from 
     * Copy all files from `exports` to `server/Data` so they are auto-imported by the server app
   * Can be run in a browser (by fetching it from the server once the server is running)
     * We use self-signed certificates for now, so instruct your browser to 'proceed' when warned about it)
+  * Can also be run from the Godot editor
 
 ## License
 
