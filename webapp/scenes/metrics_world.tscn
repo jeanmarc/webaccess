@@ -57,7 +57,7 @@ mesh = SubResource("BoxMesh_ra4dx")
 transform = Transform3D(-0.0347773, -0.999395, 0, 0.999395, -0.0347773, 0, 0, 0, 1, -4.72356, -4.64968, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.728498, -0.107482, -0.00209701)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.801104, -0.110009, -0.00209701)
 shape = SubResource("BoxShape3D_war86")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2"]
