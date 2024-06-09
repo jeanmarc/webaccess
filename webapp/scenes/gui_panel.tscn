@@ -18,7 +18,7 @@ albedo_texture = SubResource("ViewportTexture_ivbr3")
 [sub_resource type="BoxShape3D" id="BoxShape3D_yuuxt"]
 size = Vector3(0.726006, 0.406862, 0.0155639)
 
-[node name="GuiPanel" type="Node3D"]
+[node name="GuiPanel" type="StaticBody3D"]
 script = ExtResource("1_4yuxe")
 
 [node name="SubViewport" type="SubViewport" parent="."]
@@ -31,10 +31,8 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 
 mesh = SubResource("QuadMesh_0ik2g")
 surface_material_override/0 = SubResource("StandardMaterial3D_6c0v8")
 
-[node name="Area3D" type="Area3D" parent="Quad"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Quad/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000110536, 0.000544637, -0.00296023)
-shape = SubResource("BoxShape3D_yuuxt")
-
 [node name="monitorPanel" parent="." instance=ExtResource("2_1x4wn")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.00296023, 0.000544637, -0.000110536)
+shape = SubResource("BoxShape3D_yuuxt")
