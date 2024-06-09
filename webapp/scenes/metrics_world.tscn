@@ -30,7 +30,7 @@ transform = Transform3D(0.466062, 0.629381, -0.621825, 0, 0.702824, 0.711364, 0.
 light_energy = 3.834
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("3_j8wc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0782883, 1.00596, 1.48273)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0782883, 0.893627, 1.48273)
 
 [node name="Floor" type="StaticBody3D" parent="."]
 
