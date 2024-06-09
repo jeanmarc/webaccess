@@ -9,6 +9,7 @@ var peer = WebSocketMultiplayerPeer.new()
 var uiInstance: MetricsGui
 var id = 0
 
+
 func _ready():
 	var serverCert = load("res://server.crt")
 	peer.create_client("wss://%s:%s" % [server_host, server_port], TLSOptions.client_unsafe(serverCert))
@@ -22,6 +23,7 @@ func _ready():
 
 	uiInstance = ui.instantiate()
 	self.add_child(uiInstance)
+
 
 func _process(delta):
 	peer.poll()
@@ -41,8 +43,10 @@ func _process(delta):
 				replyText.clear()
 				replyText.insert_text_at_caret(str(data.response))
 
+
 func _on_direct_request_button_pressed():
 	$HTTPRequest.request(requestUrlLine.text)
+
 
 func _on_request_button_pressed():
 	var request = {
@@ -53,11 +57,13 @@ func _on_request_button_pressed():
 	print("Sending: %s" % JSON.stringify(request))
 	peer.put_packet(JSON.stringify(request).to_utf8_buffer())
 
+
 func _on_request_completed(result, response_code, headers, body):
 	var reply = body.get_string_from_utf8()
 	print(reply)
 	replyText.clear()
 	replyText.insert_text_at_caret(reply)
+
 
 func switch_scene():
 	get_tree().change_scene_to_file("res://scenes/metrics_world.tscn")
