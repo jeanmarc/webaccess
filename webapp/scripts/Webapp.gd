@@ -25,7 +25,7 @@ func _ready():
 	self.add_child(uiInstance)
 
 
-func _process(delta):
+func _process(_delta):
 	peer.poll()
 	if peer.get_available_packet_count() > 0:
 		print("Receiving data...")
@@ -58,11 +58,14 @@ func _on_request_button_pressed():
 	peer.put_packet(JSON.stringify(request).to_utf8_buffer())
 
 
-func _on_request_completed(result, response_code, headers, body):
-	var reply = body.get_string_from_utf8()
-	print(reply)
-	replyText.clear()
-	replyText.insert_text_at_caret(reply)
+func _on_request_completed(result, response_code, _headers, body):
+	if result != 0 and response_code != 200:
+		print("Request failed (result=%s, code=%s)" % [result, response_code])
+	else:
+		var reply = body.get_string_from_utf8()
+		print(reply)
+		replyText.clear()
+		replyText.insert_text_at_caret(reply)
 
 
 func switch_scene():
