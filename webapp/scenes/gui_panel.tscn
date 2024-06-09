@@ -38,4 +38,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000110536, 0.000544637, -0.
 shape = SubResource("BoxShape3D_yuuxt")
 
 [node name="monitorPanel" parent="." instance=ExtResource("2_1x4wn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)

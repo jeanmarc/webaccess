@@ -6,7 +6,7 @@ extends Node3D
 func _ready():
 	var gui = preload("res://scenes/metrics_gui.tscn")
 	var guiInstance = gui.instantiate()
-	$SubViewport.add_child(guiInstance)
+	subviewport.add_child(guiInstance)
 	pass # Replace with function body.
 
 
