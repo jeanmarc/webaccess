@@ -6,3 +6,11 @@
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_uh03v")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 17.0
+offset_right = 105.0
+offset_bottom = 48.0
+text = "Server"

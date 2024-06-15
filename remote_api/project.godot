@@ -15,6 +15,12 @@ run/main_scene="res://scenes/remote_api.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=640
+window/size/viewport_height=480
+window/size/initial_position_type=0
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/godottpd/plugin.cfg")
