@@ -21,6 +21,13 @@ size = Vector3(0.726006, 0.406862, 0.0155639)
 [node name="GuiPanel" type="StaticBody3D"]
 script = ExtResource("1_4yuxe")
 
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.277517, 0)
+billboard = 1
+no_depth_test = true
+text = "Monitor"
+font_size = 16
+
 [node name="SubViewport" type="SubViewport" parent="."]
 size = Vector2i(1200, 675)
 size_2d_override = Vector2i(1200, 675)

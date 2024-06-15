@@ -4,6 +4,9 @@
 .godot/
 *.translation
 
+# Ignore addons by default
+**/addons/
+
 Data/
 exports/
 Exports/
