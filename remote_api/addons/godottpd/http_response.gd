@@ -19,7 +19,8 @@ var headers: Dictionary = {}
 var cookies: Array = []
 
 # Origins allowed to call this resource
-var access_control_origin = "*"
+var access_control_origin = "https://localhost:9990"
+#var access_control_origin = "*"
 
 # Comma separed methods for the access control
 var access_control_allowed_methods = "POST, GET, OPTIONS"

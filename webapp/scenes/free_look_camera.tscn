@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://38gjui025urw"]
+
+[ext_resource type="Script" path="res://borrows/free_look_camera.gd" id="1_483tb"]
+
+[node name="FreeLookCamera" type="Camera3D"]
+transform = Transform3D(0.999299, -0.0211055, 0.0309228, 0.0160573, 0.987744, 0.155252, -0.0338205, -0.154647, 0.987391, 0.105054, 0.105936, 2.05636)
+script = ExtResource("1_483tb")

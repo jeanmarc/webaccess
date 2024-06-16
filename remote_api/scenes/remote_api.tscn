@@ -2,5 +2,15 @@
 
 [ext_resource type="Script" path="res://scripts/remote_api.gd" id="1_p6dms"]
 
-[node name="RemoteApi" type="Node"]
+[node name="RemoteApi" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_p6dms")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 16.0
+offset_right = 199.0
+offset_bottom = 43.0
+text = "Remote API"

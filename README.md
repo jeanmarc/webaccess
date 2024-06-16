@@ -5,12 +5,50 @@ Example project to show how to run a Godot webapp in your browser and access rem
 Based on the instructions from the Godot manual (https://docs.godotengine.org/en/stable/tutorials/networking/http_request_class.html),
 with modifications where necessary.
 
+## Prerequisites
+Godot 4.2 must be installed
+
 ## Structure
 There's three Godot projects: one Webapp (the "client"), a webapp server, and an "external" server. The "external"
 server is an example server that provides an API. The Webapp is hosted via the webapp server, and is configured in such
 a way that it can run in any browser, and still be able to call the "external" API (typically this is prevented because
-of CORS policies in the browser, so we need to find a solution that allows requests from our webapp to reach the 
-"external" API).
+of CORS policies in the browser, so we use a solution that allows requests from our webapp to reach the 
+"external" API by using the webapp server as an intermediary).
+
+### 3 projects
+* remote_api
+  * Acts as an example API that can be called by the webapps
+  * Can be run from the Godot editor
+* server
+  * Starts an HTTPS server to serve the webapp (on port 9999)
+  * Starts a WebRTC server to communicate with the running webapps (on port 9998)
+    * Via this channel, the server receives instructions to call APIs, and send the results back to the caller
+  * Can be run from the Godot editor
+* webapp
+  * Needs to be Exported as HTML5 application
+    * Export into `exports`
+    * Copy all files from `exports` to `server/Data` so they are auto-imported by the server app
+  * Can be run in a browser (by fetching it from the server once the server is running)
+    * We use self-signed certificates for now, so instruct your browser to 'proceed' when warned about it)
+  * Can also be run from the Godot editor
+
+## License
+
+This work is licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), except for the
+following resources:
+* `server/borrows/anotherHTTPserver.gd`
+  * Copyright (c) Anutrix(Numan Zaheer Ahmed) - MIT License
+  * Adjusted by me to support replying with binaries (skip the reading as String and converting to PackedByteArray)
+* `remote_api/addons/godottpd` and `server/addons/godottpd`
+  * based on https://github.com/deep-entertainment/godottpd
+  * MIT - see server/addons/godottpd/LICENSE
+* `webapp/borrows/FreeLookCamera.gd`
+  * MIT - Copyright 2020 Adam Viola
+  * https://github.com/adamviola/simple-free-look-camera/tree/master
+
+(C) CC BY-SA 4.0, 2024 Jean-Marc van Leerdam <j.m.van.leerdam@gmail.com>
+
+# Appendices
 
 ## CORS restrictions
 To be able to call an API that is hosted on another server as the webapp host, the browser needs to receive instructions
@@ -57,13 +95,9 @@ application. The initial solution uses godottpd, which has no support for HTTPS.
 
 A Reddit post and one of its comments points to a possible solution (https://www.reddit.com/r/godot/comments/17ltxjp/comment/l1uz70s)
 
+Another possible solution: https://github.com/Anutrix/lan-jet/blob/main/AnotherHTTPServer/AnotherHTTPServer.gd
+(something like this is needed to have a minimal HTTPS server that can serve the Webapp)
 
-## License
-
-This work is licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), except for the
-following resources:
-* `remote_api/addons/godottpd` and `server/addons/godottpd`  
-  * based on https://github.com/deep-entertainment/godottpd
-  * MIT - see server/addons/godottpd/LICENSE
-
-(C) CC BY-SA 4.0, 2024 Jean-Marc van Leerdam <j.m.van.leerdam@gmail.com>
+The webapp and its backend can use the websocket API and/or WebRTC (so no need to hack our own http server with TLS 
+for their communication, we just need HTTPS server to serve the webapp).
+Inspiration from https://www.youtube.com/watch?v=2eGkj9eBxAo  (and https://www.youtube.com/watch?v=ulfGNtiItnc)

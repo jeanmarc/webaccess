@@ -12,4 +12,8 @@ func nextFibonacci():
 	return result
 
 func handle_get(request, response):
-	response.send(200, "From remote. Next fibonacci is " + str(nextFibonacci()))
+	var answer = {
+		"source": "Remote",
+		"answer": str(nextFibonacci())
+	}
+	response.send(200, JSON.stringify(answer))
