@@ -5,7 +5,7 @@ var id: int = 0
 
 @onready var requestUrlLine = $RequestURL
 @onready var replyText: TextEdit = $Reply
-
+@onready var timer: Timer = $Timer
 @onready var progressBar = $TextureProgressBar
 
 var server_host = "localhost"
@@ -22,12 +22,13 @@ var peer = WebSocketMultiplayerPeer.new()
 func _ready():
 	var serverCert = load("res://server.crt")
 	peer.create_client("wss://%s:%s" % [server_host, server_port], TLSOptions.client_unsafe(serverCert))
-	print("started client")
+	print("started client " + str(self.get_path()))
 
 	$HTTPRequest.request_completed.connect(_on_request_completed)
 	$SendRequest.pressed.connect(_on_request_button_pressed)
 	$SendRequestDirect.pressed.connect(_on_direct_request_button_pressed)
-	$Timer.timeout.connect(_on_request_button_pressed)
+	print("wiring the timer")
+	timer.timeout.connect(_on_request_button_pressed)
 
 func _process(_delta):
 	peer.poll()
@@ -80,3 +81,8 @@ func _on_request_completed(result, response_code, _headers, body):
 		print(reply)
 		replyText.clear()
 		replyText.insert_text_at_caret(reply)
+
+
+func startPolling():
+	print("Start polling " + str(self.get_path()))
+	timer.start(1)

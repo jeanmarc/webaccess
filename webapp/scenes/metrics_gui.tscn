@@ -77,4 +77,3 @@ tint_progress = Color(0.160784, 0.819608, 0.129412, 1)
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [node name="Timer" type="Timer" parent="."]
-autostart = true

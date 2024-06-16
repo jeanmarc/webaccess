@@ -25,7 +25,7 @@ script = ExtResource("1_4yuxe")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.277517, 0)
 billboard = 1
 no_depth_test = true
-text = "Monitor"
+text = "Off"
 font_size = 16
 
 [node name="SubViewport" type="SubViewport" parent="."]
@@ -33,8 +33,9 @@ size = Vector2i(1200, 675)
 size_2d_override = Vector2i(1200, 675)
 size_2d_override_stretch = true
 
-[node name="Quad" type="MeshInstance3D" parent="."]
+[node name="MonitorOutput" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+visible = false
 mesh = SubResource("QuadMesh_0ik2g")
 surface_material_override/0 = SubResource("StandardMaterial3D_6c0v8")
 

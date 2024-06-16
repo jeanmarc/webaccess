@@ -85,3 +85,5 @@ shape = SubResource("BoxShape3D_war86")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wall4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0641963, 0)
 mesh = SubResource("BoxMesh_ra4dx")
+
+[node name="Timer" type="Timer" parent="."]
