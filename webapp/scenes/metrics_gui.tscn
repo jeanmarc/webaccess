@@ -67,12 +67,14 @@ offset_right = 692.0
 offset_bottom = 300.0
 max_value = 1.0
 step = 0.01
-value = 0.75
+value = 1.0
 fill_mode = 4
 texture_under = ExtResource("2_3eddn")
 texture_progress = ExtResource("2_3eddn")
 tint_under = Color(0.212305, 0.212305, 0.212305, 1)
 tint_progress = Color(0.160784, 0.819608, 0.129412, 1)
+radial_initial_angle = 225.0
+radial_fill_degrees = 270.0
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
