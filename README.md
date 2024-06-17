@@ -32,6 +32,12 @@ of CORS policies in the browser, so we use a solution that allows requests from 
     * We use self-signed certificates for now, so instruct your browser to 'proceed' when warned about it)
   * Can also be run from the Godot editor
 
+### Example: 3D display for metrics
+The example projects show how one can display multiple virtual monitors in a 3D space, each showing content that is
+actively fetched from the network.
+
+![Demo scene](resources/3dmonitor.gif)
+
 ## License
 
 This work is licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), except for the
